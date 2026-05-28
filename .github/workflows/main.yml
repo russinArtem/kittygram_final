@@ -28,9 +28,7 @@ jobs:
         docker build -t kittygram_backend ./backend
         docker build -t kittygram_gateway ./nginx
     - name: Start full environment with docker-compose
-      run: |
-        docker network create test-network || true
-        docker compose -f ./docker-compose.yml up -d --network test-network
+      run: docker compose -f ./docker-compose.yml up -d
     - name: Wait for Django to be ready
       run: |
         echo "Waiting for Django..."
