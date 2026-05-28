@@ -22,7 +22,7 @@ jobs:
           - 5432:5432
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
       backend:
-        build: ./backend/
+        image: Dockerfile:./backend/
         env:
           DB_HOST: db
           DB_PORT: 5432
@@ -32,10 +32,10 @@ jobs:
         ports:
           - 8000:8000
       frontend:
-        build: ./frontend
+        image: Dockerfile:./frontend
         command: cp -r /app/build/. /frontend_static/
       gateway:
-        build: ./nginx/
+        image: Dockerfile:./nginx/
         env:
           BACKEND_HOST: backend
           BACKEND_PORT: 8000
