@@ -11,16 +11,6 @@ permissions:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:13.10
-        env:
-          POSTGRES_USER: django_user
-          POSTGRES_PASSWORD: <PASSWORD>
-          POSTGRES_DB: django_db
-        ports:
-          - 5432:5432
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -33,6 +23,8 @@ jobs:
         python -m pip install --upgrade pip setuptools
         pip install flake8==7.3.0 flake8-isort==7.0.0
         pip install -r ./backend/requirements.txt 
+    - name: Set up Docker Compose
+      uses: docker/setup-compose@v2
     - name: Build Docker images (with cache)
       run: |
         docker build -t kittygram_backend ./backend
@@ -40,11 +32,11 @@ jobs:
     - name: Start full environment with docker-compose
       run: |
         docker network create test-network || true
-        docker-compose -f ./backend/docker-compose.yml up -d --network test-network
+        docker compose -f ./docker-compose.yml up -d --network test-network
     - name: Wait for Django to be ready
       run: |
         echo "Waiting for Django..."
-        until curl -f http://localhost:9000/health; do sleep 2; done
+        until curl -f http://localhost:9000; do sleep 2; done
     - name: Test with flake8 and pytests
       env:
         POSTGRES_USER: django_user
