@@ -48,7 +48,7 @@ jobs:
             --name db \
             --network kittygram-net \
             -e POSTGRES_USER=django_user \
-            -e POSTGRES_PASSWORD=<PASSWORD> \
+            -e POSTGRES_PASSWORD=PASSWORD \
             -e POSTGRES_DB=django_db \
             -p 5432:5432 \
             postgres:13
@@ -71,7 +71,7 @@ jobs:
             -e DB_HOST=db \
             -e DB_PORT=5432 \
             -e POSTGRES_USER=django_user \
-            -e POSTGRES_PASSWORD=<PASSWORD> \
+            -e POSTGRES_PASSWORD=PASSWORD \
             -e POSTGRES_DB=django_db \
             -p 8000:8000 \
             backend:test
