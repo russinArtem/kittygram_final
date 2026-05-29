@@ -30,8 +30,6 @@ jobs:
         image: kittygram_gateway
         ports:
           - 80:80
-        depends_on:
-          - postgres
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python
