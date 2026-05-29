@@ -37,6 +37,7 @@ def test_dockerhub_images_exist(
             image=image
         )
         response = requests.get(link)
+        print(f"Checking {image}: {link} -> status {response.status_code}")
         assert response.status_code == expected_status_code, (
             'Убедитесь, что в вашем DockerHub-аккаунте доступен образ '
             f'`{image}`. Образ должен быть публичным.'
