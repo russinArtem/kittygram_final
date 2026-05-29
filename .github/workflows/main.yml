@@ -33,18 +33,15 @@ jobs:
         python -m pip install --upgrade pip setuptools
         pip install flake8==7.3.0 flake8-isort==7.0.0
         pip install -r ./backend/requirements.txt 
-    - name: Test with flake8 and django tests
+    - name: Test with flake8 and pytests
       env:
         POSTGRES_USER: django_user
         POSTGRES_PASSWORD: <PASSWORD>
         POSTGRES_DB: django_db
-        DB_HOST: postgres
+        DB_HOST: 127.0.0.1
         DB_PORT: 5432
       run: |
         python -m flake8 backend/
-        until pg_isready -h postgres -U django_user -d django_db; do
-          sleep 2
-        done
         python manage.py migrate
         pytest
   build_and_push_to_docker_hub:
