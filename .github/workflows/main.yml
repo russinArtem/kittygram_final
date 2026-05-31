@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   tests:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         python-version: ["3.10", "3.11", "3.12"]
@@ -25,6 +25,13 @@ jobs:
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - uses: actions/checkout@v3
+    - name: Install required Python versions (3.10, 3.11, 3.12)
+      run: |
+        sudo apt update
+        sudo apt install -y software-properties-common
+        sudo add-apt-repository ppa:deadsnakes/ppa
+        sudo apt update
+        sudo apt install -y python3.10 python3.10-venv python3.11 python3.11-venv python3.12 python3.12-venv
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
