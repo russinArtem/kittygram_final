@@ -2,8 +2,7 @@ name: Main Kittygram workflow
 
 on:
   push:
-    branches:
-      - main
+    branches: [ '**' ]
 
 permissions:
   contents: read
@@ -11,6 +10,9 @@ permissions:
 jobs:
   tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: [3.10, 3.11, 3.12]
     services:
       postgres:
         image: postgres:13.10
@@ -26,8 +28,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: 3.12
-
+        python-version: \${{ matrix.python-version }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip setuptools
@@ -46,6 +47,7 @@ jobs:
   build_and_push_to_docker_hub:
     name: Push Docker image to DockerHub
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     needs: tests
     steps:
       - name: Check out the repo
@@ -65,6 +67,7 @@ jobs:
           tags: artemrussin/kittygram_backend:latest
   frontend_tests:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
 
     steps:
     - uses: actions/checkout@v3
@@ -85,6 +88,7 @@ jobs:
   build_frontend_and_push_to_docker_hub:
     name: Push frontend Docker image to DockerHub
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     needs: frontend_tests
     steps:
       - name: Check out the repo
@@ -105,6 +109,7 @@ jobs:
   build_gateway_and_push_to_docker_hub:
     name: Push gateway Docker image to DockerHub
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
@@ -123,6 +128,7 @@ jobs:
           tags: artemrussin/kittygram_gateway:latest
   deploy:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     needs: 
       - build_and_push_to_docker_hub
       - build_frontend_and_push_to_docker_hub
@@ -154,6 +160,7 @@ jobs:
             sudo docker compose -f docker-compose.production.yml exec backend cp -r /app/collected_static/. /backend_static/static/
   send_message:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     needs: deploy
     steps:
     - name: Send message

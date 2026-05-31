@@ -19,7 +19,6 @@ services:
       - media_volume:/app/media
   frontend:
     image: artemrussin/kittygram_frontend
-    restart: always
     env_file: .env
     command: cp -r /app/build/. /frontend_static/
     volumes:
