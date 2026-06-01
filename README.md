@@ -3,7 +3,6 @@
 [![Build Status](https://github.com/russinArtem/kittygram_final/actions/workflows/main.yml/badge.svg)](https://github.com/russinArtem/kittygram_final/actions/workflows/main.yml)
 [![Coverage](https://img.shields.io/codecov/c/gh/russinArtem/kittygram_final.svg)](https://codecov.io/gh/russinArtem/kittygram_final)
 [![Python version](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/downloads/release/python-312/)
-[![License](https://img.shields.io/github/license/russinArtem/kittygram_final)](https://github.com/russinArtem/kittygram_final/blob/main/LICENSE)
 
 ## Что нужно сделать
 
