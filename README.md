@@ -1,11 +1,7 @@
-#  Как работать с репозиторием финального задания
+#  Kittygram (контейнеры и CI/CD с помощью GitHub Actions)
 
 [![Build Status](https://github.com/russinArtem/kittygram_final/actions/workflows/main.yml/badge.svg)](https://github.com/russinArtem/kittygram_final/actions/workflows/main.yml)
 [![Python version](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/downloads/release/python-312/)
-
-## Что нужно сделать
-
-Настроить запуск проекта Kittygram в контейнерах и CI/CD с помощью GitHub Actions
 
 ## Описание проекта
 
